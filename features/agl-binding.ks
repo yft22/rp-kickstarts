@@ -1,26 +1,32 @@
 %include ../packages/agl-binding.ks
 
+
+%post --nochroot --erroronfail
+cp /etc/resolv.conf /mnt/sysimage/etc/
+%end
+
 %post --erroronfail --log /tmp/post-agl-binding_install.log
 source /etc/os-release
 if [[ $VERSION_ID == "33" ]]; then
 	REPO="redpesk-agl-build"
 else
-	REPO="redpesk-middleware*"
+	REPO="redpesk-*"
 fi
 RPMS_DIR="/var/lib/rp-firstboot/rpms"
 if [ -f /tmp/agl-binding-list ]; then
 	source /tmp/agl-binding-list
 	mkdir -p $RPMS_DIR
 	LIST=$(rpm -qa --qf "%{NAME}\n" | grep binding | tr "\n" " ")
-	[ ! -z $LIST ] && dnf reinstall -y \
-		--enablerepo=$REPO --disablerepo=*source* --disablerepo=*debug* \
+	[ -n "${LIST}" ] && dnf reinstall -y \
+		--enablerepo="$REPO" --disablerepo=*source* --disablerepo=*debug* --disablerepo=*candidate* \
 		--downloadonly --downloaddir=$RPMS_DIR \
-		$LIST
-	[ ! -z $AGL_BINDING ] && dnf install -y \
-		--enablerepo=$REPO --disablerepo=*source* --disablerepo=*debug* \
+		${LIST}
+	[ -n "${AGL_BINDING}" ] && dnf install -y \
+		--enablerepo="$REPO" --disablerepo=*source* --disablerepo=*debug* --disablerepo=*candidate \
 		--downloadonly --downloaddir=$RPMS_DIR \
-		$AGL_BINDING
+		${AGL_BINDING}
 	rm /tmp/agl-binding-list
+rm -f /etc/resolv.conf
 fi
 
 #Clean DNF Cache

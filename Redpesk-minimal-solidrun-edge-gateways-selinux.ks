@@ -1,4 +1,4 @@
-%include images/core-cm3.ks
+%include images/minimal-solidrun.ks
 %include features/selinux.ks
 %include features/extract_logs.ks
 

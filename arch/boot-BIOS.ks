@@ -1,1 +1,7 @@
-part /boot  --fstype ext4 --size 512    --asprimary --label=boot
+# Partitioning X86 images
+zerombr
+
+# Partition clearing information
+clearpart --none --initlabel --disklabel=msdos
+
+part /boot  --fstype ext4 --size 500    --label=boot

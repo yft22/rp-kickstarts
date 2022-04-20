@@ -4,6 +4,9 @@
 zerombr
 clearpart --all --disklabel=msdos
 
+# Offset partition, will be deleted after anaconda install
+part /offsettodelete --fstype vfat --size 10 --label=offsettodelete
+
 part /boot/firmware  --fstype vfat --size 100    --asprimary --label=firmware
 
 

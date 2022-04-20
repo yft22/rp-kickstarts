@@ -1,5 +1,3 @@
-zerombr
-clearpart --all --initlabel --disklabel=msdos
 
 %packages
 @core
@@ -20,6 +18,7 @@ linux-firmware-brcm
 -ipw*
 -usb_modeswitch
 -generic-release*
+-syslinux-extlinux
 
 %end
 %post

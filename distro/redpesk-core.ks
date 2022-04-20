@@ -1,7 +1,9 @@
 %include ../features/redpesk-partitioning.ks
 
+#Live media need
+network --bootproto=dhcp --device=link --activate
 # Use the text interface not the graphical one
-text
+#text
 #version=DEVEL
 # Keyboard layouts
 keyboard --vckeymap=fr --xlayouts='fr'
@@ -16,14 +18,14 @@ timezone --isUtc Europe/Paris
 auth --useshadow --passalgo=sha512
 # Firewall configuration
 firewall --enabled --service=mdns,ssh
-# Use automatic partioning on vda
-ignoredisk --only-use=vda
+# Be sure host drive will not be touched by anaconda
+ignoredisk --drives="vd*"
 # Run the Setup Agent on first boot
 firstboot --disable
 # Do not configure the X Window System
 skipx
-# Reboot the image once installed. ImageFactory look for that!
-reboot
+# Shutdown the image when finished
+shutdown
 # System services
 services --enabled="sshd,NetworkManager,chronyd"
 services --disabled="kdump"
@@ -32,8 +34,9 @@ services --disabled="kdump"
 %end
 
 %post --erroronfail --log /tmp/post-distro.log
-echo "Packages within this disk image"
-rpm -qa
+echo "Packages within this disk image :"
+rpm -qa | sort -h
+echo ""
 # Note that running rpm recreates the rpm db files which aren't needed or wanted
 rm -f /var/lib/rpm/__db*
 
@@ -64,9 +67,10 @@ NetworkManager-wifi
 chkconfig
 chrony
 dracut-config-generic   # remove this in %post
+dracut-live
 glibc-langpack-en
 redpesk-repos
-redhat-rpm-config
+iotbzh-rpm-config
 platform-firstboot
 wget
 dnf

@@ -1,5 +1,5 @@
-%include ../arch/boot-EFI.ks
-%include ../boards/generic/aarch64.ks
+%include ../boards/renesas/ulcb.ks
+%include ../distro/redpesk-bsp.ks
 %include ../distro/redpesk-core.ks
 %include ../features/recovery.ks
 %include ../features/reduce_size.ks
