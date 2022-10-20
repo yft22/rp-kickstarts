@@ -1,5 +1,5 @@
 %include ../../arch/arm-base.ks
-%include ../../arch/arm-boot-ext4.ks
+%include ../../arch/arm-boot-gpt-ext4.ks
 
 
 %post --log /tmp/post-ulcb.log
@@ -11,4 +11,6 @@
 -uboot-tools
 -zram-generator
 -zram-generator-defaults
+# Kingfisher needs
+linux-firmware-ti-connectivity
 %end
