@@ -4,6 +4,7 @@
 %post
 BINDING="\
 	helloworld-binding \
+	sec-gate-fedid-binding \
 "
 echo "BINDING=\"\$BINDING ${BINDING}\"" >> /tmp/binding-list
 %end
