@@ -11,4 +11,8 @@ tar
 tree
 usbutils
 vim
+pcsc-lite
+pcsc-lite-devel
+pcsc-lite-doc
+pcsc-lite-libs
 %end
